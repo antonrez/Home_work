@@ -2,19 +2,57 @@
 //
 
 #include <iostream>
+#include <windows.h>
 
 int main()
 {
-    std::cout << "Hello World!\n";
+
+    HANDLE hFile;
+    char DataBuffer[] = "This is some test data to write to the file2.";
+    DWORD dwBytesToWrite = (DWORD)strlen(DataBuffer);
+    DWORD dwBytesWritten = 0;
+    BOOL bErrorFlag = FALSE;
+
+   
+   
+    hFile = CreateFileA(
+        "linkFile.txt",
+        GENERIC_WRITE | GENERIC_READ,   
+        0,                             
+        NULL,                           
+        OPEN_ALWAYS,    
+        //CREATE_NEW,
+        FILE_ATTRIBUTE_NORMAL,         
+        NULL                           
+    );                  
+    if (hFile == INVALID_HANDLE_VALUE)
+    {
+        std::cout << "File not created" << std::endl;
+        return 0;
+    }
+    else 
+    {
+        std::cout << "File created" << std::endl;
+    }
+
+    bErrorFlag = WriteFile(
+        hFile,
+        &DataBuffer,      // start of data to write
+        dwBytesToWrite,  // number of bytes to write
+        &dwBytesWritten, // number of bytes that were written
+        NULL
+    );
+    if (WriteFile) {
+        std::cout << "Writing to file." << std::endl;
+    }
+    else
+    {
+        std::cout << "The file was not written" << std::endl;
+    }
+    CloseHandle(hFile);
+
+
+    CopyFile(L"linkFile.txt", L"File2.txt", false);
+    
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

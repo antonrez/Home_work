@@ -1,5 +1,4 @@
-.vs/
-Copy_File/Copy_File.vcxproj.user
-x64/
+Copy_File/.vs/
+Copy_File/*.vcxproj.user
+Copy_File/x64/
 Copy_File/[Dd]ebug/
-Copy_File/Copy_File.vcxproj.filters
