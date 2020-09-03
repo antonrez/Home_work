@@ -10,10 +10,12 @@ public:
 	void My_CopyFile();
 	void SetPathFrom(LPCSTR);
 	void SetPathTo(LPCSTR);
-	//int CopyFile(L"linkFile.txt", L"File2.txt", false);
+	void checkFile(char* file_name);
+
 private:
 	HANDLE m_hFile = 0;
 	LPCSTR m_path_from;
 	LPCSTR m_path_to;
+	int open;
 };
 
