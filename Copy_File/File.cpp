@@ -1,29 +1,77 @@
 #include "File.h"
 #include <windows.h>
 #include <iostream>
-
+#include <exception>
+#include <io.h>
+#include <stdlib.h>
+bool FileExists(LPCSTR fname)
+{
+    _finddata_t data;
+    long nFind = _findfirst(fname, &data);
+    if (nFind != -1)
+    {
+        // Если этого не сделать, то произойдет утечка ресурсов
+        _findclose(nFind);
+        return true;
+    }
+    return false;
+};
 
 void File::My_CreateFile()
 {
-    m_hFile = CreateFileA(
-        m_path_from,
-        //"greet.txt",LPCSTR
-        GENERIC_WRITE | GENERIC_READ,
-        0,
-        NULL,
-        OPEN_ALWAYS,
-        //CREATE_NEW,
-        FILE_ATTRIBUTE_NORMAL,
-        NULL
-    );
-    if (m_hFile == INVALID_HANDLE_VALUE)
+    if (FileExists(m_path_from))
     {
-        std::cout << "File not created"<< std::endl;
+        int x;
+        std::cout << "file exist. Overwrite?(1/0)" << std::endl;
+        std::cin >> x;
+        if (x==1)
+            {
+                m_hFile = CreateFileA(
+                    m_path_from,
+                    GENERIC_WRITE | GENERIC_READ,
+                    0,
+                    NULL,
+                    OPEN_ALWAYS,
+                    FILE_ATTRIBUTE_NORMAL,
+                    NULL
+                );
+            }
+       
+        if (x != 1) {
+            try
+            {
+                if (x!=1)
+                    throw "File not created";
+            }
+            catch (const char* exception)
+            {
+                std::cerr << "Error: " << exception << '\n';
+            }
+            }
+              
     }
-    else
+    else {
+        m_hFile = CreateFileA(
+            m_path_from,
+            GENERIC_WRITE | GENERIC_READ,
+            0,
+            NULL,
+            CREATE_NEW,
+            FILE_ATTRIBUTE_NORMAL,
+            NULL
+        );
+    }
+  
+    try 
     {
-        std::cout << "File created name: " << m_path_from << std::endl;
+        if (m_hFile == INVALID_HANDLE_VALUE)
+            throw "File not created";
     }
+    catch (const char* exception)
+    {
+        std::cerr << "Error: " << exception << '\n';
+    }
+
 
 }
 
@@ -41,12 +89,17 @@ void File::My_WriteFile()
         &dwBytesWritten, // number of bytes that were written
         NULL
     );
-    if (WriteFile) {
-        std::cout << "Writing to file." << std::endl;
-    }
-    else
+
+
+
+    try
     {
-        std::cout << "The file was not written" << std::endl;
+        if (!bErrorFlag)
+            throw "File not write";
+    }
+    catch (const char* exception)
+    {
+        std::cerr << "Error: " << exception << '\n';
     }
     CloseHandle(m_hFile);
 
@@ -54,18 +107,14 @@ void File::My_WriteFile()
 
 void File::My_CopyFile()
 {
-    CopyFileA(
+   
+    BOOL res = CopyFileA(
         m_path_from,
         m_path_to,
         false);
+    if (!res)
+        std::cerr <<"File not copy";
 
-    if (CopyFileA) {
-        std::cout << "File copy  name: " << m_path_to << std::endl;
-    }
-    else
-    {
-        std::cout << "File not copy" << std::endl;
-    }
 }
 
 void File::SetPathFrom(LPCSTR data)
