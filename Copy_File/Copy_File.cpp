@@ -8,8 +8,9 @@ int main()
     File file;
     file.SetPathFrom("greetNew.txt");
     file.SetPathTo("greetCopy.txt");
-    file.My_CreateFile();
-    file.My_WriteFile();
-    file.My_CopyFile();
+    //file.My_CreateFile();
+    //file.My_WriteFile();
+    //file.My_CopyFile();
+    file.New_CopyFile();
 }
 

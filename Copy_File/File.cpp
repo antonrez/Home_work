@@ -77,7 +77,7 @@ void File::My_CreateFile()
 
 void File::My_WriteFile()
 {
-    char DataBuffer[] = "This is some test data to write to the file2.";
+    char DataBuffer[] = "This is some test data to write to the file. This is some test data to write to the file.";
     DWORD dwBytesToWrite = (DWORD)strlen(DataBuffer);
     DWORD dwBytesWritten = 0;
     BOOL bErrorFlag = FALSE;
@@ -125,4 +125,62 @@ void File::SetPathFrom(LPCSTR data)
 void File::SetPathTo(LPCSTR data)
 {
     m_path_to = data;
+}
+
+void File::New_CopyFile()
+{
+    m_hFile = CreateFileA(
+        m_path_from,
+        GENERIC_READ,
+        0,
+        NULL,
+        OPEN_ALWAYS,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+    );
+    
+   
+    int lpBufer;
+    DWORD BytesRead;
+    BOOL bErrorFlag = FALSE;
+    int  dwSize = GetFileSize(m_hFile, NULL);
+    char* DataBuffer = new char[dwSize];
+    //char DataBuffer[dwSize];
+
+    ReadFile(
+        m_hFile,            //дискриптор файла
+        DataBuffer,           //адрес дуф файла
+        //&DataBuffer,           //адрес дуф файла
+        dwSize,    //количество читаемых байтов
+        //sizeof(DataBuffer),    //количество читаемых байтов
+        &BytesRead,
+        NULL
+    );
+   
+   
+    CloseHandle(m_hFile);
+    m_cFile = CreateFileA(
+        m_path_to,
+        GENERIC_WRITE | GENERIC_READ,
+        FILE_SHARE_WRITE,
+        NULL,
+        OPEN_ALWAYS,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+    );
+   
+    
+    DWORD dwBytesToWrite = dwSize;
+    DWORD dwBytesWritten = 0;
+   
+    bErrorFlag = WriteFile(
+        m_cFile,
+        DataBuffer,
+        dwBytesToWrite,  // number of bytes to write
+        &dwBytesWritten, // number of bytes that were written
+        NULL
+    );
+    CloseHandle(m_cFile);
+    delete[] DataBuffer;
+
 }

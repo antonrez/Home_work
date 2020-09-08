@@ -1,1 +1,28 @@
-This is some test data to write to the file2.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+This is some test data to write to the file. This is some test data to write to the file.
+Почему так? Это для того, чтобы компилятор мог подсчитать, по какому же смещению от начала 
+находится элемент buffer[1][0]. Иначе компилятор не сможет этого выяснить: для этого нужно 
+знать размер строки массива (ведь buffer[1][0] расположено по смещению, равному размеру 
+строки, от начала buffer!)
