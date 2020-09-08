@@ -138,27 +138,23 @@ void File::New_CopyFile()
         FILE_ATTRIBUTE_NORMAL,
         NULL
     );
-    
    
     int lpBufer;
     DWORD BytesRead;
     BOOL bErrorFlag = FALSE;
     int  dwSize = GetFileSize(m_hFile, NULL);
     char* DataBuffer = new char[dwSize];
-    //char DataBuffer[dwSize];
 
     ReadFile(
-        m_hFile,            //дискриптор файла
-        DataBuffer,           //адрес дуф файла
-        //&DataBuffer,           //адрес дуф файла
-        dwSize,    //количество читаемых байтов
-        //sizeof(DataBuffer),    //количество читаемых байтов
+        m_hFile,
+        DataBuffer,
+        dwSize,
         &BytesRead,
         NULL
     );
    
-   
     CloseHandle(m_hFile);
+
     m_cFile = CreateFileA(
         m_path_to,
         GENERIC_WRITE | GENERIC_READ,
@@ -168,19 +164,17 @@ void File::New_CopyFile()
         FILE_ATTRIBUTE_NORMAL,
         NULL
     );
-   
-    
-    DWORD dwBytesToWrite = dwSize;
+ 
     DWORD dwBytesWritten = 0;
-   
     bErrorFlag = WriteFile(
         m_cFile,
         DataBuffer,
-        dwBytesToWrite,  // number of bytes to write
-        &dwBytesWritten, // number of bytes that were written
+        dwSize,
+        &dwBytesWritten,
         NULL
     );
     CloseHandle(m_cFile);
-    delete[] DataBuffer;
 
+    delete[] DataBuffer;
+    DataBuffer = nullptr;
 }
